@@ -1,10 +1,50 @@
 ' Colors
 ' ##################################
 
-!define PERSON_BG_COLOR #08427B
-!define CONTAINER_BG_COLOR #438DD5
-!define SYSTEM_BG_COLOR #999999
-!define ELEMENT_FONT_COLOR #FFFFFF
+!define ELEMENT_FONT_COLOR #000000
+
+
+!define NEW_BG_COLOR #blue
+!define NEW_FONT_COLOR #black
+!define NEW_BORDER_COLOR #black
+!define EXISTING_BG_COLOR #Blue
+!define EXISTING_FONT_COLOR #black
+!define EXISTING_BORDER_COLOR #black
+!define POTENTIAL_BG_COLOR #blue
+!define POTENTIAL_FONT_COLOR #black
+!define POTENTIAL_BORDER_COLOR #black
+!define EXTERNAL_BG_COLOR #blue
+!define EXTERNAL_FONT_COLOR #black
+!define EXTERNAL_BORDER_COLOR #black
+
+
+!definelong LIFECYCLE_STYLE
+    !undef NEW_BG_COLOR
+    !undef NEW_FONT_COLOR
+    !undef NEW_BORDER_COLOR
+    !undef EXISTING_BG_COLOR
+    !undef EXISTING_FONT_COLOR
+    !undef EXISTING_BORDER_COLOR
+    !undef POTENTIAL_BG_COLOR
+    !undef POTENTIAL_FONT_COLOR
+    !undef POTENTIAL_BORDER_COLOR
+    !undef EXTERNAL_BG_COLOR
+    !undef EXTERNAL_FONT_COLOR
+    !undef EXTERNAL_BORDER_COLOR
+
+    !define NEW_BG_COLOR #62983D
+    !define NEW_FONT_COLOR #black
+    !define NEW_BORDER_COLOR #black
+    !define EXISTING_BG_COLOR #4F88BB
+    !define EXISTING_FONT_COLOR #black
+    !define EXISTING_BORDER_COLOR #black
+    !define POTENTIAL_BG_COLOR #C5E0B3
+    !define POTENTIAL_FONT_COLOR #black
+    !define POTENTIAL_BORDER_COLOR #black
+    !define EXTERNAL_BG_COLOR #FFC000
+    !define EXTERNAL_FONT_COLOR #black
+    !define EXTERNAL_BORDER_COLOR #black
+!enddefinelong
 
 ' Styling
 ' ##################################
@@ -15,6 +55,7 @@ skinparam defaultTextAlignment center
 
 skinparam wrapWidth 200
 skinparam maxMessageSize 150
+skinparam roundcorner 20
 
 skinparam rectangle {
     StereotypeFontSize 12
@@ -22,35 +63,95 @@ skinparam rectangle {
 
 skinparam Arrow {
     Color #666666
-    FontColor #666666
+    FontColor ELEMENT_FONT_COLOR
     FontSize 12
 }
 
-skinparam rectangle<<person>> {
-    StereotypeFontColor ELEMENT_FONT_COLOR
-    FontColor ELEMENT_FONT_COLOR
-    BackgroundColor PERSON_BG_COLOR
-    BorderColor #073B6F
+
+skinparam actor<<person>> {
+    FontColor EXISTING_FONT_COLOR
+    BackgroundColor EXISTING_BG_COLOR
+    BorderColor EXISTING_BORDER_COLOR
+    StereotypeFontColor EXISTING_FONT_COLOR
 }
+skinparam actor<<newperson>> {
+    FontColor NEW_FONT_COLOR
+    BackgroundColor NEW_BG_COLOR
+    BorderColor NEW_BORDER_COLOR
+    StereotypeFontColor NEW_FONT_COLOR
+}
+skinparam actor<<potentialperson>> {
+    FontColor POTENTIAL_FONT_COLOR
+    BackgroundColor POTENTIAL_BG_COLOR
+    BorderColor POTENTIAL_BORDER_COLOR
+    StereotypeFontColor POTENTIAL_FONT_COLOR
+}
+skinparam actor<<externalperson>> {
+    FontColor EXTERNAL_FONT_COLOR
+    BackgroundColor EXTERNAL_BG_COLOR
+    BorderColor EXTERNAL_BORDER_COLOR
+    StereotypeFontColor EXTERNAL_FONT_COLOR
+}
+
+
 
 skinparam rectangle<<container>> {
-    StereotypeFontColor ELEMENT_FONT_COLOR
-    FontColor ELEMENT_FONT_COLOR
-    BackgroundColor CONTAINER_BG_COLOR
-    BorderColor #3C7FC0
+    StereotypeFontColor EXISTING_FONT_COLOR
+    FontColor EXISTING_FONT_COLOR
+    BackgroundColor EXISTING_BG_COLOR
+    BorderColor EXISTING_BORDER_COLOR
+}
+skinparam rectangle<<newcontainer>> {
+    StereotypeFontColor NEW_FONT_COLOR
+    FontColor NEW_FONT_COLOR
+    BackgroundColor NEW_BG_COLOR
+    BorderColor NEW_BORDER_COLOR
+}
+skinparam rectangle<<externalcontainer>> {
+    StereotypeFontColor EXTERNAL_FONT_COLOR
+    FontColor EXTERNAL_FONT_COLOR
+    BackgroundColor EXTERNAL_BG_COLOR
+    BorderColor EXTERNAL_BORDER_COLOR
+}
+skinparam rectangle<<potentialcontainer>> {
+    StereotypeFontColor POTENTIAL_FONT_COLOR
+    FontColor POTENTIAL_FONT_COLOR
+    BackgroundColor POTENTIAL_BG_COLOR
+    BorderColor POTENTIAL_BORDER_COLOR
 }
 
+
+
 skinparam rectangle<<system>> {
-    StereotypeFontColor ELEMENT_FONT_COLOR
-    FontColor ELEMENT_FONT_COLOR
-    BackgroundColor SYSTEM_BG_COLOR
-    BorderColor #8A8A8A
+    StereotypeFontColor EXISTING_FONT_COLOR
+    FontColor EXISTING_FONT_COLOR
+    BackgroundColor EXISTING_BG_COLOR
+    BorderColor EXISTING_BORDER_COLOR
+}
+skinparam rectangle<<newsystem>> {
+    StereotypeFontColor NEW_FONT_COLOR
+    FontColor NEW_FONT_COLOR
+    BackgroundColor NEW_BG_COLOR
+    BorderColor NEW_BORDER_COLOR
+}
+skinparam rectangle<<externalsystem>> {
+    StereotypeFontColor EXTERNAL_FONT_COLOR
+    FontColor EXTERNAL_FONT_COLOR
+    BackgroundColor EXTERNAL_BG_COLOR
+    BorderColor EXTERNAL_BORDER_COLOR
+}
+skinparam rectangle<<potentialsystem>> {
+    StereotypeFontColor POTENTIAL_FONT_COLOR
+    FontColor POTENTIAL_FONT_COLOR
+    BackgroundColor POTENTIAL_BG_COLOR
+    BorderColor POTENTIAL_BORDER_COLOR    
 }
 
 skinparam package<<boundary>> {
     StereotypeFontSize 0
-    FontColor #999999
-    BorderColor #cccccc
+    FontColor #black
+    BackgroundColor #DEEBF6
+    BorderColor #black
 }
 
 ' Layout
@@ -63,13 +164,27 @@ skinparam defaultFontName "Comic Sans MS"
 center footer <font color=red>Warning:</font> Created for discussion, needs to be validated
 !enddefinelong
 
+!definelong DRAFT
+header
+     <font color=red><size:32>DRAFT</size></font>
+endheader
+!enddefinelong
+
 !definelong LAYOUT_WITH_LEGEND
 hide stereotype
 legend right
-|=              |= Type |
-|<PERSON_BG_COLOR>      | person |
-|<CONTAINER_BG_COLOR>   | container |
-|<SYSTEM_BG_COLOR>      | external system |
+|= Colour            |= Type |
+|<EXISTING_BG_COLOR> | Existing |
+|<NEW_BG_COLOR>      | Planned |
+|<POTENTIAL_BG_COLOR>| Potential |
+|<EXTERNAL_BG_COLOR> | External |
+endlegend
+!enddefinelong
+
+!definelong LAYOUT_WITH_LEGEND_HORIZONTAL
+hide stereotype
+legend right
+|<EXISTING_BG_COLOR>  Existing  |<NEW_BG_COLOR>  Planned  |<POTENTIAL_BG_COLOR>  Potential  |<EXTERNAL_BG_COLOR>  External  |
 endlegend
 !enddefinelong
 
@@ -79,14 +194,35 @@ endlegend
 ' Elements
 ' ##################################
 
-!define Person(e_alias, e_label) rectangle "==e_label" <<person>> as e_alias
-!define Person(e_alias, e_label, e_descr) rectangle "==e_label\n\n e_descr" <<person>> as e_alias
+!define Person(e_alias, e_label) actor "==e_label" <<person>> as e_alias
+!define Person(e_alias, e_label, e_descr) actor "==e_label\n//<size:TECHN_FONT_SIZE>[e_descr]</size>//" <<person>> as e_alias
+!define NewPerson(e_alias, e_label) actor "==e_label" <<newperson>> as e_alias
+!define NewPerson(e_alias, e_label, e_descr) actor "==e_label\n//<size:TECHN_FONT_SIZE>[e_descr]</size>//" <<newperson>> as e_alias
+!define PotentialPerson(e_alias, e_label) actor "==e_label" <<potentialperson>> as e_alias
+!define PotentialPerson(e_alias, e_label, e_descr) actor "==e_label\n//<size:TECHN_FONT_SIZE>[e_descr]</size>//" <<potentialperson>> as e_alias
+!define ExternalPerson(e_alias, e_label) actor "==e_label" <<externalperson>> as e_alias
+!define ExternalPerson(e_alias, e_label, e_descr) actor "==e_label\n//<size:TECHN_FONT_SIZE>[e_descr]</size>//" <<externalperson>> as e_alias
+
 
 !define Container(e_alias, e_label, e_techn) rectangle "==e_label\n//<size:TECHN_FONT_SIZE>[e_techn]</size>//" <<container>> as e_alias
 !define Container(e_alias, e_label, e_techn, e_descr) rectangle "==e_label\n//<size:TECHN_FONT_SIZE>[e_techn]</size>//\n\n e_descr" <<container>> as e_alias
+!define NewContainer(e_alias, e_label, e_techn) rectangle "==e_label\n//<size:TECHN_FONT_SIZE>[e_techn]</size>//" <<newcontainer>> as e_alias
+!define NewContainer(e_alias, e_label, e_techn, e_descr) rectangle "==e_label\n//<size:TECHN_FONT_SIZE>[e_techn]</size>//\n\n e_descr" <<newcontainer>> as e_alias
+!define PotentialContainer(e_alias, e_label, e_techn) rectangle "==e_label\n//<size:TECHN_FONT_SIZE>[e_techn]</size>//" <<potentialcontainer>> as e_alias
+!define PotentialContainer(e_alias, e_label, e_techn, e_descr) rectangle "==e_label\n//<size:TECHN_FONT_SIZE>[e_techn]</size>//\n\n e_descr" <<potentialcontainer>> as e_alias
+!define ExternalContainer(e_alias, e_label, e_techn) rectangle "==e_label\n//<size:TECHN_FONT_SIZE>[e_techn]</size>//" <<externalcontainer>> as e_alias
+!define ExternalContainer(e_alias, e_label, e_techn, e_descr) rectangle "==e_label\n//<size:TECHN_FONT_SIZE>[e_techn]</size>//\n\n e_descr" <<externalcontainer>> as e_alias
+
 
 !define System(e_alias, e_label) rectangle "==e_label" <<system>> as e_alias
 !define System(e_alias, e_label, e_descr) rectangle "==e_label\n\n e_descr" <<system>> as e_alias
+!define NewSystem(e_alias, e_label) rectangle "==e_label" <<newsystem>> as e_alias
+!define NewSystem(e_alias, e_label, e_descr) rectangle "==e_label\n\n e_descr" <<newsystem>> as e_alias
+!define PotentialSystem(e_alias, e_label) rectangle "==e_label" <<potentialsystem>> as e_alias
+!define PotentialSystem(e_alias, e_label, e_descr) rectangle "==e_label\n\n e_descr" <<potentialsystem>> as e_alias
+!define ExternalSystem(e_alias, e_label) rectangle "==e_label" <<externalsystem>> as e_alias
+!define ExternalSystem(e_alias, e_label, e_descr) rectangle "==e_label\n\n e_descr" <<externalsystem>> as e_alias
+
 
 ' Relationship
 ' ##################################

@@ -1,5 +1,8 @@
 @startuml "bigbankplc"
-!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+!include C:\development\github.com\secretdeveloper\C4-PlantUML\C4_Container.puml
+
+LIFECYCLE_STYLE
+DRAFT
 
 LAYOUT_TOP_DOWN
 'LAYOUT_AS_SKETCH
@@ -7,22 +10,27 @@ LAYOUT_WITH_LEGEND
 
 
 Person(customer, Customer, "A customer of the bank, with personal bank accounts")
+NewPerson(newcustomer, Customer, "A customer of the bank, with personal bank accounts")
+ExternalPerson(extcustomer, Customer, "A customer of the bank, with personal bank accounts")
+PotentialPerson(potcustomer, Customer, "A customer of the bank, with personal bank accounts")
 
 package "Internet Banking System" <<boundary>> as c1 {
 
     Container(web_app, "Web Application", "Java, Spring MVC", "Delivers the static content and the Internet banking SPA")
 
-    Container(spa, "Single-Page App", "JavaScript, Angular", "Provides all the Internet banking functionality to cutomers via their web browser")
+    NewContainer(spa, "Single-Page App", "JavaScript, Angular", "Provides all the Internet banking functionality to cutomers via their web browser")
+    
+    ExternalContainer(mobile_app, "Mobile App", "C#, Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device")
 
-    Container(mobile_app, "Mobile App", "C#, Xamarin", "Provides a limited subset of the Internet banking functionality to customers via their mobile device")
-
-    Container(backend_api, "API Application", "Java, Docker Container", "Provides Internet banking functionality via API")
+    PotentialContainer(backend_api, "API Application", "Java, Docker Container", "Provides Internet banking functionality via API")
 
     Container(database, "Database", "SQL Database", "Stores user registraion information, hased auth credentials, access logs, etc.")
 }
 
 System(email_system, "E-Mail System", "The internal Microsoft Exchange system")
-System(banking_system, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.")
+NewSystem(banking_system, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.")
+ExternalSystem(ext_system, "some external system")
+PotentialSystem(pot_system, "some potential system")
 
 Rel(customer, web_app, "Uses", "HTTPS")
 Rel(customer, spa, "Uses", "HTTPS")
@@ -39,10 +47,5 @@ Rel_R(backend_api, banking_system, "Uses", "sync/async, XML/HTTPS")
 Rel_U(backend_api, email_system, "Sends e-mails using", "sync, SMTP")
 
 Rel(email_system, customer, "Sends e-mails to")
-
-rectangle test
-email_system -UP-> test
-test -LEFT-> customer
-hide test
 
 @enduml
